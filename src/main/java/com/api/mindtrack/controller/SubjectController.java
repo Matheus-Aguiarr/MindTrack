@@ -18,9 +18,8 @@ public class SubjectController {
     private SubjectService subjectService;
 
     @PostMapping
-    public ResponseEntity createSubject(@RequestBody SubjectRequestDTO data) {
-        subjectService.createSubject(data);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<SubjectResponseDTO> createSubject(@RequestBody SubjectRequestDTO data) {
+        return ResponseEntity.ok(subjectService.createSubject(data));
     }
 
     @GetMapping("/user/{userId}")

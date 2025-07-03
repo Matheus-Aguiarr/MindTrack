@@ -22,11 +22,13 @@ public class SubjectService {
     @Autowired
     private UserRepository userRepository;
 
-    public void createSubject(SubjectRequestDTO data) {
+    public SubjectResponseDTO createSubject(SubjectRequestDTO data) {
         UserModel findUser = userRepository.findById(data.user_id())
                 .orElseThrow(UserNotFound::new);
         SubjectModel subjectModel = new SubjectModel(data, findUser);
         subjectRepository.save(subjectModel);
+
+        return new SubjectResponseDTO(subjectModel);
     }
 
     public List<SubjectResponseDTO> getSubjectsByUserId(Long userId) {
