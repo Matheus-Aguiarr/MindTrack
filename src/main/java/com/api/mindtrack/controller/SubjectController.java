@@ -22,9 +22,16 @@ public class SubjectController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/user/{userId}")
     public ResponseEntity<List<SubjectResponseDTO>> getSubjectsByUserId(@PathVariable Long userId) {
         return ResponseEntity.ok(subjectService.getSubjectsByUserId(userId));
     }
+
+    @GetMapping("/{subjectId}")
+    public ResponseEntity<SubjectResponseDTO> getSubjectBySubjectId(@PathVariable Long subjectId) {
+        return ResponseEntity.ok(subjectService.getSubjectBySubjectId(subjectId));
+    }
+
+
 
 }

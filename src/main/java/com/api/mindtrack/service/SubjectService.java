@@ -30,4 +30,9 @@ public class SubjectService {
         List<SubjectModel> allSubjectsOfUser = subjectRepository.findAllByUserId(userId);
         return allSubjectsOfUser.stream().map(SubjectResponseDTO::new).toList();
     }
+
+    public SubjectResponseDTO getSubjectBySubjectId(Long subjectId) {
+        SubjectModel findSubject = subjectRepository.findById(subjectId).orElseThrow(() -> new RuntimeException("Subject Not Found."));
+        return new SubjectResponseDTO(findSubject);
+    }
 }
