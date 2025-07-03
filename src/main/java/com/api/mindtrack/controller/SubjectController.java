@@ -1,5 +1,6 @@
 package com.api.mindtrack.controller;
 
+import com.api.mindtrack.domain.subject.dto.SubjectEditDTO;
 import com.api.mindtrack.domain.subject.dto.SubjectRequestDTO;
 import com.api.mindtrack.domain.subject.dto.SubjectResponseDTO;
 import com.api.mindtrack.service.SubjectService;
@@ -30,6 +31,11 @@ public class SubjectController {
     @GetMapping("/{subjectId}")
     public ResponseEntity<SubjectResponseDTO> getSubjectBySubjectId(@PathVariable Long subjectId) {
         return ResponseEntity.ok(subjectService.getSubjectBySubjectId(subjectId));
+    }
+
+    @PutMapping("/{subjectId}")
+    public ResponseEntity<SubjectResponseDTO> editSubjectById(@PathVariable Long subjectId, @RequestBody SubjectEditDTO newData) {
+        return ResponseEntity.ok(subjectService.editSubjectById(subjectId, newData));
     }
 
 

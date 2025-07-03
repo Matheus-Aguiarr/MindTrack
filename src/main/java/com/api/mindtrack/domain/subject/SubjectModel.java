@@ -8,6 +8,7 @@ import lombok.*;
 @Entity
 @Table(name = "subjects")
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")

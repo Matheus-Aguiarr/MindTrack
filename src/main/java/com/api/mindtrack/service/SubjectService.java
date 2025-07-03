@@ -1,6 +1,7 @@
 package com.api.mindtrack.service;
 
 import com.api.mindtrack.domain.subject.SubjectModel;
+import com.api.mindtrack.domain.subject.dto.SubjectEditDTO;
 import com.api.mindtrack.domain.subject.dto.SubjectRequestDTO;
 import com.api.mindtrack.domain.subject.dto.SubjectResponseDTO;
 import com.api.mindtrack.domain.subject.repository.SubjectRepository;
@@ -38,5 +39,20 @@ public class SubjectService {
         SubjectModel findSubject = subjectRepository.findById(subjectId)
                 .orElseThrow(SubjectNotFound::new);
         return new SubjectResponseDTO(findSubject);
+    }
+
+    public SubjectResponseDTO editSubjectById(Long subjectId, SubjectEditDTO dto) {
+        SubjectModel findSubject = subjectRepository.findById(subjectId).orElseThrow(SubjectNotFound::new);
+
+        if(dto.name() != null && !dto.name().isBlank()) {
+            findSubject.setName(dto.name());
+        }
+        if(dto.description() != null && !dto.description().isBlank()) {
+            findSubject.setDescription(dto.description());
+        }
+        subjectRepository.save(findSubject);
+
+        return new SubjectResponseDTO(findSubject);
+
     }
 }
