@@ -57,4 +57,8 @@ public class SubjectService {
         return new SubjectResponseDTO(findSubject);
 
     }
+
+    public void deleteSubjectById(Long subjectId) {
+        subjectRepository.deleteById(subjectId);
+    }
 }
