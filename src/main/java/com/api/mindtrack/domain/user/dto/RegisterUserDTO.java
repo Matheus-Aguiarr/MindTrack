@@ -1,4 +1,4 @@
-package com.api.mindtrack.dto;
+package com.api.mindtrack.domain.user.dto;
 
 import com.api.mindtrack.domain.user.UserRole;
 import jakarta.validation.constraints.NotBlank;
