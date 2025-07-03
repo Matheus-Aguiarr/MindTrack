@@ -1,6 +1,6 @@
-package com.api.auth.domain.user.repository;
+package com.api.mindtrack.domain.user.repository;
 
-import com.api.auth.domain.user.UserModel;
+import com.api.mindtrack.domain.user.UserModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 

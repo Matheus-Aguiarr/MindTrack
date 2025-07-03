@@ -1,4 +1,4 @@
-package com.api.auth.dto;
+package com.api.mindtrack.dto;
 
 import jakarta.validation.constraints.NotBlank;
 

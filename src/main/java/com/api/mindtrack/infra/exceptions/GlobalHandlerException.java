@@ -1,4 +1,4 @@
-package com.api.auth.infra.exceptions;
+package com.api.mindtrack.infra.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

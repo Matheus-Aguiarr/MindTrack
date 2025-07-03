@@ -1,4 +1,4 @@
-package com.api.auth.dto;
+package com.api.mindtrack.dto;
 
 public record TokenJwtDTO(String token) {
 }

@@ -1,12 +1,11 @@
-package com.api.auth.infra.security;
+package com.api.mindtrack.infra.security;
 
 
-import com.api.auth.domain.user.repository.UserRepository;
+import com.api.mindtrack.domain.user.repository.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.antlr.v4.runtime.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

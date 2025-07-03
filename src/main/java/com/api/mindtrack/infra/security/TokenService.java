@@ -1,6 +1,6 @@
-package com.api.auth.infra.security;
+package com.api.mindtrack.infra.security;
 
-import com.api.auth.domain.user.UserModel;
+import com.api.mindtrack.domain.user.UserModel;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;

@@ -1,4 +1,4 @@
-package com.api.auth.domain.user;
+package com.api.mindtrack.domain.user;
 
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;

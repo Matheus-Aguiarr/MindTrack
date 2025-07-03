@@ -1,13 +1,11 @@
-package com.api.auth.controller;
+package com.api.mindtrack.controller;
 
-import com.api.auth.domain.user.UserModel;
-import com.api.auth.domain.user.UserRole;
-import com.api.auth.domain.user.repository.UserRepository;
-import com.api.auth.dto.RegisterUserDTO;
-import com.api.auth.dto.TokenJwtDTO;
-import com.api.auth.dto.UserAuthDTO;
-import com.api.auth.infra.security.TokenService;
-import jakarta.persistence.EnumType;
+import com.api.mindtrack.domain.user.UserModel;
+import com.api.mindtrack.domain.user.repository.UserRepository;
+import com.api.mindtrack.dto.RegisterUserDTO;
+import com.api.mindtrack.dto.TokenJwtDTO;
+import com.api.mindtrack.dto.UserAuthDTO;
+import com.api.mindtrack.infra.security.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

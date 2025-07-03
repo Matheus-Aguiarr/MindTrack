@@ -1,4 +1,4 @@
-package com.api.auth.domain.user;
+package com.api.mindtrack.domain.user;
 
 public enum UserRole {
     ADMIN("admin"),

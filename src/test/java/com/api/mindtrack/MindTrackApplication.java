@@ -1,10 +1,10 @@
-package com.api.auth;
+package com.api.mindtrack;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class AuthApplicationTests {
+class MindTrackApplication {
 
 	@Test
 	void contextLoads() {
