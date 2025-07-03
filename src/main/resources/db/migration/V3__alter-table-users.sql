@@ -1,0 +1,14 @@
+ALTER TABLE subjects DROP CONSTRAINT fk_user;
+
+ALTER TABLE users DROP CONSTRAINT users_pkey;
+ALTER TABLE users DROP COLUMN id;
+
+ALTER TABLE users ADD COLUMN id BIGSERIAL PRIMARY KEY;
+
+ALTER TABLE subjects ALTER COLUMN user_id TYPE BIGINT USING user_id::bigint;
+
+ALTER TABLE subjects
+    ADD CONSTRAINT fk_user
+    FOREIGN KEY(user_id)
+    REFERENCES users(id)
+    ON DELETE CASCADE;

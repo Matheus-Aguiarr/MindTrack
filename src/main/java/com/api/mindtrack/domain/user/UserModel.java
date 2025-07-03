@@ -1,10 +1,12 @@
 package com.api.mindtrack.domain.user;
 
+import com.api.mindtrack.domain.subject.SubjectModel;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -14,15 +16,18 @@ public class UserModel implements UserDetails {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String login;
     private String password;
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    public UserModel(String id, String login, String password, UserRole role) {
+    @OneToMany(mappedBy = "user")
+    private List<SubjectModel> subject;
+
+    public UserModel(Long id, String login, String password, UserRole role) {
         this.id = id;
         this.login = login;
         this.password = password;
@@ -38,7 +43,7 @@ public class UserModel implements UserDetails {
     public UserModel() {}
 
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
