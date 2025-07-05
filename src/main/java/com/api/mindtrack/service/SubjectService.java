@@ -1,5 +1,7 @@
 package com.api.mindtrack.service;
 
+import com.api.mindtrack.domain.studygoal.GoalModel;
+import com.api.mindtrack.domain.studygoal.repository.GoalRepository;
 import com.api.mindtrack.domain.subject.SubjectModel;
 import com.api.mindtrack.domain.subject.dto.SubjectEditDTO;
 import com.api.mindtrack.domain.subject.dto.SubjectRequestDTO;
@@ -21,6 +23,8 @@ public class SubjectService {
     private SubjectRepository subjectRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private GoalRepository goalRepository;
 
     public SubjectResponseDTO createSubject(SubjectRequestDTO data) {
         UserModel findUser = userRepository.findById(data.user_id())
@@ -38,9 +42,10 @@ public class SubjectService {
     }
 
     public SubjectResponseDTO getSubjectBySubjectId(Long subjectId) {
+        List<GoalModel> goalsOfSubject = goalRepository.findAllBySubjectId(subjectId);
         SubjectModel findSubject = subjectRepository.findById(subjectId)
                 .orElseThrow(SubjectNotFound::new);
-        return new SubjectResponseDTO(findSubject);
+        return new SubjectResponseDTO(findSubject, goalsOfSubject);
     }
 
     public SubjectResponseDTO editSubjectById(Long subjectId, SubjectEditDTO dto) {

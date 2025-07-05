@@ -1,5 +1,6 @@
 package com.api.mindtrack.domain.studygoal;
 
+import com.api.mindtrack.domain.studygoal.dto.GoalRequestDTO;
 import com.api.mindtrack.domain.subject.SubjectModel;
 import jakarta.persistence.*;
 import lombok.*;
@@ -27,4 +28,12 @@ public class GoalModel {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "subject_id")
     private SubjectModel subject;
+
+    public GoalModel(GoalRequestDTO data, SubjectModel subject) {
+        this.title = data.title();
+        this.description = data.description();
+        this.deadline = data.deadline();
+        this.subject = subject;
+        this.done = false;
+    }
 }
