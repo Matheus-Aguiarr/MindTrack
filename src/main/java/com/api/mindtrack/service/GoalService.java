@@ -25,4 +25,11 @@ public class GoalService {
         goalRepository.save(goalModel);
         return new GoalResponseDTO(goalModel);
     }
+
+    public GoalResponseDTO markDoneGoal(Long goalId) {
+        GoalModel findGoal = goalRepository.findById(goalId).orElseThrow(() -> new RuntimeException("Goal Not Found."));
+        findGoal.setDone(true);
+        goalRepository.save(findGoal);
+        return new GoalResponseDTO(findGoal);
+    }
 }

@@ -5,10 +5,7 @@ import com.api.mindtrack.domain.studygoal.dto.GoalResponseDTO;
 import com.api.mindtrack.service.GoalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("goal")
@@ -22,6 +19,11 @@ public class GoalController {
     @PostMapping
     public ResponseEntity<GoalResponseDTO> createGoal(@RequestBody GoalRequestDTO data) {
         return ResponseEntity.ok(goalService.createGoal(data));
+    }
+
+    @PutMapping("/done/{goalId}")
+    public ResponseEntity<GoalResponseDTO> markDoneGoal(@PathVariable Long goalId) {
+        return ResponseEntity.ok(goalService.markDoneGoal(goalId));
     }
 
 }
