@@ -22,9 +22,9 @@ public class SubjectController {
         return ResponseEntity.ok(subjectService.createSubject(data));
     }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<SubjectResponseDTO>> getSubjectsByUserId(@PathVariable Long userId) {
-        return ResponseEntity.ok(subjectService.getSubjectsByUserId(userId));
+    @GetMapping("/user")
+    public ResponseEntity<List<SubjectResponseDTO>> getSubjectsByUserId() {
+        return ResponseEntity.ok(subjectService.getSubjectsByUserId());
     }
 
     @GetMapping("/{subjectId}")
