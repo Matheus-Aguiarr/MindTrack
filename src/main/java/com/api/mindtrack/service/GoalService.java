@@ -1,9 +1,9 @@
 package com.api.mindtrack.service;
 
 import com.api.mindtrack.domain.studygoal.GoalModel;
+import com.api.mindtrack.domain.studygoal.dto.GoalEditDTO;
 import com.api.mindtrack.domain.studygoal.dto.GoalRequestDTO;
 import com.api.mindtrack.domain.studygoal.dto.GoalResponseDTO;
-import com.api.mindtrack.domain.studygoal.dto.GoalResponseWithoutSubjectDTO;
 import com.api.mindtrack.domain.studygoal.repository.GoalRepository;
 import com.api.mindtrack.domain.subject.SubjectModel;
 import com.api.mindtrack.domain.subject.repository.SubjectRepository;
@@ -15,6 +15,8 @@ import java.util.List;
 
 @Service
 public class GoalService {
+
+//    ToDo: Ao criar/editar um Goal para um subject especifico, eu apenas verifico o id do subject recebendo pela URL, mas, eu devo pegar o usuario autenticado, pra ai sim conferir se aquele subject eh dele, pra ai sim autorizar ou nao ele a fazer uma alteracao nesse subject.
 
     @Autowired
     private GoalRepository goalRepository;
@@ -36,8 +38,24 @@ public class GoalService {
         return new GoalResponseDTO(findGoal);
     }
 
-    public List<GoalResponseWithoutSubjectDTO> getGoalsOfSubject(Long subjectId) {
+    public List<GoalResponseDTO> getGoalsOfSubject(Long subjectId) {
         List<GoalModel> findGoals = goalRepository.findAllBySubjectId(subjectId);
-        return findGoals.stream().map(GoalResponseWithoutSubjectDTO::new).toList();
+        return findGoals.stream().map(GoalResponseDTO::new).toList();
+    }
+
+    public GoalResponseDTO editGoalById(Long goalId, GoalEditDTO data) {
+        GoalModel findGoal = goalRepository.findById(goalId).orElseThrow(() -> new RuntimeException("Goal Not Found."));
+        if (data.title() != null && !data.title().isBlank()) {
+            findGoal.setTitle(data.title());
+        }
+        if (data.description() != null && !data.description().isBlank()) {
+            findGoal.setDescription(data.description());
+        }
+        if (data.deadline() != null && !data.deadline().toString().isBlank()) {
+            findGoal.setDeadline(data.deadline());
+        }
+        goalRepository.save(findGoal);
+
+        return new GoalResponseDTO(findGoal);
     }
 }

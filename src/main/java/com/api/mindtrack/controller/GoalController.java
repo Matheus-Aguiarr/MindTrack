@@ -1,8 +1,8 @@
 package com.api.mindtrack.controller;
 
+import com.api.mindtrack.domain.studygoal.dto.GoalEditDTO;
 import com.api.mindtrack.domain.studygoal.dto.GoalRequestDTO;
 import com.api.mindtrack.domain.studygoal.dto.GoalResponseDTO;
-import com.api.mindtrack.domain.studygoal.dto.GoalResponseWithoutSubjectDTO;
 import com.api.mindtrack.service.GoalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,8 +29,14 @@ public class GoalController {
         return ResponseEntity.ok(goalService.markDoneGoal(goalId));
     }
 
-    @GetMapping
-    public ResponseEntity<List<GoalResponseWithoutSubjectDTO>> getGoalsOfSubject(@RequestParam Long subjectId) {
+    @PutMapping("/{goalId}")
+    public ResponseEntity<GoalResponseDTO> editGoalById(@PathVariable Long goalId, @RequestBody GoalEditDTO data) {
+        return ResponseEntity.ok(goalService.editGoalById(goalId, data));
+    }
+
+
+    @GetMapping()
+    public ResponseEntity<List<GoalResponseDTO>> getGoalsOfSubject(@RequestParam Long subjectId) {
         return ResponseEntity.ok(goalService.getGoalsOfSubject(subjectId));
     }
 
