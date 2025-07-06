@@ -3,12 +3,15 @@ package com.api.mindtrack.service;
 import com.api.mindtrack.domain.studygoal.GoalModel;
 import com.api.mindtrack.domain.studygoal.dto.GoalRequestDTO;
 import com.api.mindtrack.domain.studygoal.dto.GoalResponseDTO;
+import com.api.mindtrack.domain.studygoal.dto.GoalResponseWithoutSubjectDTO;
 import com.api.mindtrack.domain.studygoal.repository.GoalRepository;
 import com.api.mindtrack.domain.subject.SubjectModel;
 import com.api.mindtrack.domain.subject.repository.SubjectRepository;
 import com.api.mindtrack.infra.exceptions.SubjectNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class GoalService {
@@ -31,5 +34,10 @@ public class GoalService {
         findGoal.setDone(true);
         goalRepository.save(findGoal);
         return new GoalResponseDTO(findGoal);
+    }
+
+    public List<GoalResponseWithoutSubjectDTO> getGoalsOfSubject(Long subjectId) {
+        List<GoalModel> findGoals = goalRepository.findAllBySubjectId(subjectId);
+        return findGoals.stream().map(GoalResponseWithoutSubjectDTO::new).toList();
     }
 }
