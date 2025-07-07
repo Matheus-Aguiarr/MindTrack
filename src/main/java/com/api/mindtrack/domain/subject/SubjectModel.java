@@ -1,5 +1,6 @@
 package com.api.mindtrack.domain.subject;
 
+import com.api.mindtrack.domain.note.NoteModel;
 import com.api.mindtrack.domain.studygoal.GoalModel;
 import com.api.mindtrack.domain.subject.dto.SubjectRequestDTO;
 import com.api.mindtrack.domain.user.UserModel;
@@ -30,6 +31,9 @@ public class SubjectModel {
 
     @OneToMany(mappedBy = "subject")
     private List<GoalModel> goals = new ArrayList<>();
+
+    @OneToMany(mappedBy = "subject")
+    private List<NoteModel> notes = new ArrayList<>();
 
 
     public SubjectModel(SubjectRequestDTO dto, UserModel user) {
