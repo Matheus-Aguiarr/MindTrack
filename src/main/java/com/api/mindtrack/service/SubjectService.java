@@ -11,7 +11,6 @@ import com.api.mindtrack.domain.user.UserModel;
 import com.api.mindtrack.domain.user.repository.UserRepository;
 import com.api.mindtrack.infra.exceptions.SubjectNotFound;
 import com.api.mindtrack.infra.exceptions.UserNotFound;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
