@@ -29,15 +29,20 @@ public class GoalController {
         return ResponseEntity.ok(goalService.markDoneGoal(goalId));
     }
 
-    @PutMapping("/{goalId}")
+    @PatchMapping("/{goalId}")
     public ResponseEntity<GoalResponseDTO> editGoalById(@PathVariable Long goalId, @RequestBody GoalEditDTO data) {
         return ResponseEntity.ok(goalService.editGoalById(goalId, data));
     }
 
-
     @GetMapping()
     public ResponseEntity<List<GoalResponseDTO>> getGoalsOfSubject(@RequestParam Long subjectId) {
         return ResponseEntity.ok(goalService.getGoalsOfSubject(subjectId));
+    }
+
+    @DeleteMapping("/{goalId}")
+    public ResponseEntity deleteGoalById(@PathVariable Long goalId) {
+        goalService.deleteGoalById(goalId);
+        return ResponseEntity.noContent().build();
     }
 
 }
