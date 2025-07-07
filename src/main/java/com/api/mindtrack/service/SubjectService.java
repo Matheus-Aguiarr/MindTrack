@@ -9,6 +9,7 @@ import com.api.mindtrack.domain.subject.dto.SubjectResponseDTO;
 import com.api.mindtrack.domain.subject.repository.SubjectRepository;
 import com.api.mindtrack.domain.user.UserModel;
 import com.api.mindtrack.domain.user.repository.UserRepository;
+import com.api.mindtrack.infra.exceptions.AccessDenied;
 import com.api.mindtrack.infra.exceptions.SubjectNotFound;
 import com.api.mindtrack.infra.exceptions.UserNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +64,7 @@ public class SubjectService {
 
 //        Verifica se o subject pertence ao usuario autenticado
         if(!findSubject.getUser().getId().equals(user.getId())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Acesso Negado.");
+            throw new AccessDenied();
         }
         return new SubjectResponseDTO(findSubject, goalsOfSubject);
     }
@@ -76,7 +77,7 @@ public class SubjectService {
         SubjectModel findSubject = subjectRepository.findById(subjectId).orElseThrow(SubjectNotFound::new);
 
         if(!findSubject.getUser().getId().equals(user.getId())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Acesso Negado.");
+            throw new AccessDenied();
         }
 
         if(dto.name() != null && !dto.name().isBlank()) {
@@ -97,7 +98,7 @@ public class SubjectService {
 
         SubjectModel findSubject = subjectRepository.findById(subjectId).orElseThrow(SubjectNotFound::new);
         if (!findSubject.getUser().getId().equals(user.getId())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Acesso Negado.");
+            throw new AccessDenied();
         }
 
         subjectRepository.deleteById(subjectId);

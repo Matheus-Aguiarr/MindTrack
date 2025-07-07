@@ -8,6 +8,8 @@ import com.api.mindtrack.domain.studygoal.repository.GoalRepository;
 import com.api.mindtrack.domain.subject.SubjectModel;
 import com.api.mindtrack.domain.subject.repository.SubjectRepository;
 import com.api.mindtrack.domain.user.UserModel;
+import com.api.mindtrack.infra.exceptions.AccessDenied;
+import com.api.mindtrack.infra.exceptions.GoalNotFound;
 import com.api.mindtrack.infra.exceptions.SubjectNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.graphql.GraphQlProperties;
@@ -37,7 +39,7 @@ public class GoalService {
         SubjectModel findSubject = subjectRepository.findById(data.subject_id()).orElseThrow(SubjectNotFound::new);
 
         if (!user.getId().equals(findSubject.getUser().getId())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Acesso Negado.");
+            throw new AccessDenied();
         }
 
         GoalModel goalModel = new GoalModel(data, findSubject);
@@ -50,11 +52,11 @@ public class GoalService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserModel user = (UserModel) authentication.getPrincipal();
 
-        GoalModel findGoal = goalRepository.findById(goalId).orElseThrow(() -> new RuntimeException("Goal Not Found."));
+        GoalModel findGoal = goalRepository.findById(goalId).orElseThrow(GoalNotFound::new);
         SubjectModel findSubject = subjectRepository.findById(findGoal.getSubject().getId()).orElseThrow(SubjectNotFound::new);
 
         if (!user.getId().equals(findSubject.getUser().getId())){
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Acesso Negado.");
+            throw new AccessDenied();
         }
 
         findGoal.setDone(true);
@@ -69,7 +71,7 @@ public class GoalService {
         SubjectModel findSubject = subjectRepository.findById(subjectId).orElseThrow(SubjectNotFound::new);
 
         if (!user.getId().equals(findSubject.getUser().getId())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Acesso Negado.");
+            throw new AccessDenied();
         }
 
         List<GoalModel> findGoals = goalRepository.findAllBySubjectId(subjectId);
@@ -77,14 +79,14 @@ public class GoalService {
     }
 
     public GoalResponseDTO editGoalById(Long goalId, GoalEditDTO data) {
-        GoalModel findGoal = goalRepository.findById(goalId).orElseThrow(() -> new RuntimeException("Goal Not Found."));
+        GoalModel findGoal = goalRepository.findById(goalId).orElseThrow(GoalNotFound::new);
         SubjectModel findSubject = subjectRepository.findById(findGoal.getSubject().getId()).orElseThrow(SubjectNotFound::new);
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserModel user = (UserModel) authentication.getPrincipal();
 
         if (!user.getId().equals(findSubject.getUser().getId())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Acesso Negado.");
+            throw new AccessDenied();
         }
 
         if (data.title() != null && !data.title().isBlank()) {
@@ -104,11 +106,11 @@ public class GoalService {
     public void deleteGoalById(Long goalId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserModel user = (UserModel) authentication.getPrincipal();
-        GoalModel goalModel = goalRepository.findById(goalId).orElseThrow(() -> new RuntimeException("Goal not found."));
+        GoalModel goalModel = goalRepository.findById(goalId).orElseThrow(GoalNotFound::new);
         SubjectModel subjectModel = subjectRepository.findById(goalModel.getSubject().getId()).orElseThrow(SubjectNotFound::new);
 
         if (!user.getId().equals(subjectModel.getUser().getId())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Acesso negado.");
+            throw new AccessDenied();
         }
 
         goalRepository.deleteById(goalId);

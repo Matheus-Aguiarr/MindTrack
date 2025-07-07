@@ -32,4 +32,14 @@ public class GlobalHandlerException {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(GoalNotFound.class)
+    public ResponseEntity<String> handleGoalNotFound(GoalNotFound ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(AccessDenied.class)
+    public ResponseEntity<String> handleForbbiden(AccessDenied ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.FORBIDDEN);
+    }
+
 }
