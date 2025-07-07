@@ -1,5 +1,7 @@
 package com.api.mindtrack.service;
 
+import com.api.mindtrack.domain.note.NoteModel;
+import com.api.mindtrack.domain.note.repository.NoteRepository;
 import com.api.mindtrack.domain.studygoal.GoalModel;
 import com.api.mindtrack.domain.studygoal.repository.GoalRepository;
 import com.api.mindtrack.domain.subject.SubjectModel;
@@ -30,6 +32,8 @@ public class SubjectService {
     private UserRepository userRepository;
     @Autowired
     private GoalRepository goalRepository;
+    @Autowired
+    private NoteRepository noteRepository;
 
     public SubjectResponseDTO createSubject(SubjectRequestDTO data) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -57,6 +61,7 @@ public class SubjectService {
         List<GoalModel> goalsOfSubject = goalRepository.findAllBySubjectId(subjectId);
         SubjectModel findSubject = subjectRepository.findById(subjectId)
                 .orElseThrow(SubjectNotFound::new);
+        List<NoteModel> notesOfSubject = noteRepository.findAllBySubjectId(subjectId);
 
 //        Pega o user autenticado
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -66,7 +71,7 @@ public class SubjectService {
         if(!findSubject.getUser().getId().equals(user.getId())) {
             throw new AccessDenied();
         }
-        return new SubjectResponseDTO(findSubject, goalsOfSubject);
+        return new SubjectResponseDTO(findSubject, goalsOfSubject, notesOfSubject);
     }
 
     public SubjectResponseDTO editSubjectById(Long subjectId, SubjectEditDTO dto) {
