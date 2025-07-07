@@ -1,5 +1,6 @@
 package com.api.mindtrack.domain.note;
 
+import com.api.mindtrack.domain.note.dto.NoteRequestDTO;
 import com.api.mindtrack.domain.subject.SubjectModel;
 import jakarta.persistence.*;
 import lombok.*;
@@ -27,5 +28,12 @@ public class NoteModel {
     @JoinColumn(name = "subject_id")
     private SubjectModel subject;
 
+
+    public NoteModel(NoteRequestDTO dto, SubjectModel subject) {
+        this.title = dto.title();
+        this.content = dto.content();
+        this.created_at = LocalDate.now();
+        this.subject = subject;
+    }
 
 }
