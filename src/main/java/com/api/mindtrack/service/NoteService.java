@@ -1,6 +1,7 @@
 package com.api.mindtrack.service;
 
 import com.api.mindtrack.domain.note.NoteModel;
+import com.api.mindtrack.domain.note.dto.NoteEditDTO;
 import com.api.mindtrack.domain.note.dto.NoteRequestDTO;
 import com.api.mindtrack.domain.note.dto.NoteResponseDTO;
 import com.api.mindtrack.domain.note.repository.NoteRepository;
@@ -64,6 +65,27 @@ public class NoteService {
         if (!user.getId().equals(subject.getUser().getId())) {
             throw new AccessDenied();
         }
+
+        return new NoteResponseDTO(note);
+    }
+
+    public NoteResponseDTO editNoteById(Long noteId, NoteEditDTO data) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserModel user = (UserModel) authentication.getPrincipal();
+        NoteModel note = noteRepository.findById(noteId).orElseThrow(() -> new RuntimeException("Note not found."));
+        SubjectModel subject = subjectRepository.findById(note.getSubject().getId()).orElseThrow(SubjectNotFound::new);
+
+        if (!user.getId().equals(subject.getUser().getId())) {
+            throw new AccessDenied();
+        }
+
+        if (data.title() != null && !data.title().isBlank()) {
+            note.setTitle(data.title());
+        }
+        if (data.content() != null && !data.content().isBlank()) {
+            note.setContent(data.content());
+        }
+        noteRepository.save(note);
 
         return new NoteResponseDTO(note);
     }

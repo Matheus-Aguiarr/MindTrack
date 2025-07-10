@@ -1,5 +1,6 @@
 package com.api.mindtrack.controller;
 
+import com.api.mindtrack.domain.note.dto.NoteEditDTO;
 import com.api.mindtrack.domain.note.dto.NoteRequestDTO;
 import com.api.mindtrack.domain.note.dto.NoteResponseDTO;
 import com.api.mindtrack.domain.note.repository.NoteRepository;
@@ -30,5 +31,10 @@ public class NoteController {
     @GetMapping("/{noteId}")
     public ResponseEntity<NoteResponseDTO> getNoteByNoteId(@PathVariable Long noteId) {
         return ResponseEntity.ok(noteService.getNoteByNoteId(noteId));
+    }
+
+    @PutMapping("/{noteId}")
+    public ResponseEntity<NoteResponseDTO> editNoteById(@PathVariable Long noteId, @RequestBody NoteEditDTO data)  {
+        return ResponseEntity.ok(noteService.editNoteById(noteId, data));
     }
 }
