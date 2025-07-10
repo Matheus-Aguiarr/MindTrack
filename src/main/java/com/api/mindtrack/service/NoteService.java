@@ -54,5 +54,18 @@ public class NoteService {
 
         return noteModelList.stream().map(NoteResponseDTO::new).toList();
     }
+
+    public NoteResponseDTO getNoteByNoteId(Long noteId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserModel user = (UserModel) authentication.getPrincipal();
+        NoteModel note = noteRepository.findById(noteId).orElseThrow(() -> new RuntimeException("Note not found."));
+        SubjectModel subject = subjectRepository.findById(note.getSubject().getId()).orElseThrow(SubjectNotFound::new);
+
+        if (!user.getId().equals(subject.getUser().getId())) {
+            throw new AccessDenied();
+        }
+
+        return new NoteResponseDTO(note);
+    }
 }
 

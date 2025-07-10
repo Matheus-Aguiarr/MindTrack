@@ -22,8 +22,13 @@ public class NoteController {
         return ResponseEntity.ok(noteService.createNote(data));
     }
 
-    @GetMapping("/{subjectId}")
+    @GetMapping("/subject/{subjectId}")
     public ResponseEntity<List<NoteResponseDTO>> getNoteBySubjectId(@PathVariable Long subjectId) {
         return ResponseEntity.ok(noteService.getNoteBySubjectId(subjectId));
+    }
+
+    @GetMapping("/{noteId}")
+    public ResponseEntity<NoteResponseDTO> getNoteByNoteId(@PathVariable Long noteId) {
+        return ResponseEntity.ok(noteService.getNoteByNoteId(noteId));
     }
 }
