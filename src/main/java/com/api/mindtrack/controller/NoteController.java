@@ -3,7 +3,6 @@ package com.api.mindtrack.controller;
 import com.api.mindtrack.domain.note.dto.NoteEditDTO;
 import com.api.mindtrack.domain.note.dto.NoteRequestDTO;
 import com.api.mindtrack.domain.note.dto.NoteResponseDTO;
-import com.api.mindtrack.domain.note.repository.NoteRepository;
 import com.api.mindtrack.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,4 +36,12 @@ public class NoteController {
     public ResponseEntity<NoteResponseDTO> editNoteById(@PathVariable Long noteId, @RequestBody NoteEditDTO data)  {
         return ResponseEntity.ok(noteService.editNoteById(noteId, data));
     }
+
+    @DeleteMapping("/{noteId}")
+    public ResponseEntity deleteNoteById(@PathVariable Long noteId) {
+        noteService.deleteNoteById(noteId);
+        return ResponseEntity.noContent().build();
+    }
 }
+
+
