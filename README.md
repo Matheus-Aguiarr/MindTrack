@@ -17,7 +17,7 @@ MindTrack é uma API RESTful desenvolvida em Java com Spring Boot para auxiliar 
 
 1. **Clone o repositório:**
    ```bash
-   git clone https://github.com/seu-usuario/mindtrack.git
+   git clone https://github.com/matheus-aguiarr/mindtrack.git
    ```
 
 2. **Configure o banco de dados PostgreSQL:**
@@ -139,4 +139,5 @@ Lembre-se de adicionar o token JWT no header das rotas protegidas:
 ```
 Authorization: Bearer <token>
 ```
-
+---
+Feito por Matheus Aguiar - [https://matheusaguiar.vercel.app](Portfolio)
