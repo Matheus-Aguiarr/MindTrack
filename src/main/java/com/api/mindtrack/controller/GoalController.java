@@ -29,6 +29,11 @@ public class GoalController {
         return ResponseEntity.ok(goalService.markDoneGoal(goalId));
     }
 
+    @PutMapping("/pending/{goalId}")
+    public ResponseEntity<GoalResponseDTO> markPendingGoal(@PathVariable Long goalId) {
+        return ResponseEntity.ok(goalService.markPedingGoal(goalId));
+    }
+
     @PatchMapping("/{goalId}")
     public ResponseEntity<GoalResponseDTO> editGoalById(@PathVariable Long goalId, @RequestBody GoalEditDTO data) {
         return ResponseEntity.ok(goalService.editGoalById(goalId, data));

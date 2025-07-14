@@ -1,0 +1,7 @@
+ALTER TABLE notes DROP CONSTRAINT fk_subject;
+
+ALTER TABLE notes
+ADD CONSTRAINT fk_subject
+FOREIGN KEY (subject_id)
+REFERENCES subjects(id)
+ON DELETE CASCADE;

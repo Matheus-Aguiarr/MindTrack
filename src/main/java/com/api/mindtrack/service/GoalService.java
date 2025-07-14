@@ -115,4 +115,20 @@ public class GoalService {
 
         goalRepository.deleteById(goalId);
     }
+
+    public GoalResponseDTO markPedingGoal(Long goalId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserModel user = (UserModel) authentication.getPrincipal();
+        GoalModel goal = goalRepository.findById(goalId).orElseThrow(GoalNotFound::new);
+        SubjectModel subject = subjectRepository.findById(goal.getSubject().getId()).orElseThrow(SubjectNotFound::new);
+
+        if(!user.getId().equals(subject.getUser().getId())) {
+            throw new AccessDenied();
+        }
+
+        goal.setDone(false);
+        goalRepository.save(goal);
+
+        return new GoalResponseDTO(goal);
+    }
 }

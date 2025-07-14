@@ -8,10 +8,11 @@ import com.api.mindtrack.domain.subject.SubjectModel;
 
 import java.util.List;
 
-public record SubjectResponseDTO(String name, String description, List<GoalResponseDTO> goals, List<NoteResponseDTO> notes) {
+public record SubjectResponseDTO(Long id, String name, String description, List<GoalResponseDTO> goals, List<NoteResponseDTO> notes) {
 
     public SubjectResponseDTO(SubjectModel subjectModel) {
         this(
+                subjectModel.getId(),
                 subjectModel.getName(),
                 subjectModel.getDescription(),
                 subjectModel.getGoals().stream().map(GoalResponseDTO::new).toList(),
@@ -21,6 +22,7 @@ public record SubjectResponseDTO(String name, String description, List<GoalRespo
 
     public SubjectResponseDTO(SubjectModel subjectModel, List<GoalModel> goalModelList, List<NoteModel> notes) {
         this(
+                subjectModel.getId(),
                 subjectModel.getName(),
                 subjectModel.getDescription(),
                 goalModelList.stream().map(GoalResponseDTO::new).toList(),

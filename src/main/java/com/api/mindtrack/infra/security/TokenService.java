@@ -21,21 +21,6 @@ public class TokenService {
     @Value("${api.security.token.secret}")
     private String secret;
 
-/*
-    Method to generate tokens.
-    This method receive an Object UserModel as parameter and generate a token JWT for this user.
-
-    Algorithm algorithm = Algorithm.HMAC256(secret);
-        - Define the sign algorithm of the token: HMAC256 with the secret key.
-        - This guarantee that only who has this secret can generate or validate tokens.
-
-    String token = JWT.create() => Create the token JWT
-    .withIssuer("API auth") => Who issued the token (quem emitiu)
-    .withSubject(user.getLogin()) => The user owner of the token, here we use the login.
-    .withExpiresAt(generateExpirationDate()) => Date and hour of the expiration
-    .sign(algorithm); => Sign the token with the algorithm and the secret key (assina)
-        - The result is a String JWT: eyJhbGciOiJIUzI1NiIsInR5cCI6...
-*/
     public String generateToken(UserModel user) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
@@ -50,18 +35,6 @@ public class TokenService {
         }
     }
 
-/*
-    Method to validate the token
-    Receive a tokenJWT as parameter and try to validate it.
-    Algorithm algorithm = Algorithm.HMAC256(secret);
-        - Use the same secret key and algorithm (it has to be the same)
-
-    return JWT.require(algorithm)
-    .withIssuer("API auth") => Verify id the issuer is the same ("API auth")
-    .build()
-    .verify(tokenJWT) => Verify if the token is not expired.
-    .getSubject(); => If is everything ok, return the subject, in this case, the login of the user.
-*/
     public String validateToken(String tokenJWT) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
