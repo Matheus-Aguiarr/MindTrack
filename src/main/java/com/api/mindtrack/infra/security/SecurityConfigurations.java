@@ -61,7 +61,7 @@ public class SecurityConfigurations {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:5173")); // Front-end
+        config.setAllowedOrigins(List.of("https://mindtrack-study.vercel.app/")); // Front-end
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*")); // ou especifique só os necessários
         config.setAllowCredentials(true); // se usar cookies/token no header
