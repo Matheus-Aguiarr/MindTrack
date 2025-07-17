@@ -1,5 +1,6 @@
 package com.api.mindtrack.domain.user;
 
+import com.api.mindtrack.domain.folder.FolderModel;
 import com.api.mindtrack.domain.subject.SubjectModel;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,6 +27,9 @@ public class UserModel implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     private List<SubjectModel> subject;
+
+    @OneToMany(mappedBy = "user")
+    private List<FolderModel> folders;
 
     public UserModel(Long id, String login, String password, UserRole role) {
         this.id = id;
@@ -67,7 +71,13 @@ public class UserModel implements UserDetails {
         }
     }
 
+    public List<SubjectModel> getSubject() {
+        return subject;
+    }
 
+    public List<FolderModel> getFolders() {
+        return folders;
+    }
 
     @Override
     public String getPassword() {

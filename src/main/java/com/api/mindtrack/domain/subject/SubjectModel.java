@@ -1,5 +1,6 @@
 package com.api.mindtrack.domain.subject;
 
+import com.api.mindtrack.domain.folder.FolderModel;
 import com.api.mindtrack.domain.note.NoteModel;
 import com.api.mindtrack.domain.studygoal.GoalModel;
 import com.api.mindtrack.domain.subject.dto.SubjectRequestDTO;
@@ -34,6 +35,10 @@ public class SubjectModel {
 
     @OneToMany(mappedBy = "subject")
     private List<NoteModel> notes = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "folder_id")
+    private FolderModel folder;
 
 
     public SubjectModel(SubjectRequestDTO dto, UserModel user) {
