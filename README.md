@@ -140,4 +140,6 @@ Lembre-se de adicionar o token JWT no header das rotas protegidas:
 Authorization: Bearer <token>
 ```
 ---
-Feito por Matheus Aguiar - [https://matheusaguiar.vercel.app](Portfolio)
+Front-End do projeto: [MindTrack](https://github.com/Matheus-Aguiarr/mindtrack-frontend)
+Deploy: [MindTrack-Web](https://mindtrack-study.vercel.app/)
+Feito por Matheus Aguiar - [Portfolio](https://matheusaguiar.vercel.app)
