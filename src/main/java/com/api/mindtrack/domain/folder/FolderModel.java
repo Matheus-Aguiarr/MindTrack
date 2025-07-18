@@ -36,4 +36,8 @@ public class FolderModel {
         this.color = folderRequestDTO.color();
         this.user = user;
     }
+
+    public void setSubject(SubjectModel subject) {
+        this.subjects.add(subject);
+    }
 }

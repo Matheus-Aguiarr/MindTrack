@@ -4,7 +4,11 @@ import com.api.mindtrack.domain.folder.FolderModel;
 import com.api.mindtrack.domain.folder.dto.FolderRequestDTO;
 import com.api.mindtrack.domain.folder.dto.FolderResponseDTO;
 import com.api.mindtrack.domain.folder.repository.FolderRepository;
+import com.api.mindtrack.domain.subject.SubjectModel;
+import com.api.mindtrack.domain.subject.repository.SubjectRepository;
 import com.api.mindtrack.domain.user.UserModel;
+import com.api.mindtrack.infra.exceptions.AccessDenied;
+import com.api.mindtrack.infra.exceptions.SubjectNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +21,8 @@ public class FolderService {
 
     @Autowired
     private FolderRepository folderRepository;
+    @Autowired
+    private SubjectRepository subjectRepository;
 
 
     public List<FolderResponseDTO> getFoldersOfUser() {
@@ -35,5 +41,23 @@ public class FolderService {
         folderRepository.save(folderModel);
 
         return new FolderResponseDTO(folderModel);
+    }
+
+    public FolderResponseDTO putSubjectInFolder(Long folderId, Long subjectId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserModel user = (UserModel) authentication.getPrincipal();
+        SubjectModel subject = subjectRepository.findById(subjectId).orElseThrow(SubjectNotFound::new);
+
+        if (!user.getId().equals(subject.getUser().getId())) {
+            throw new AccessDenied();
+        }
+
+        FolderModel folder = folderRepository.findById(folderId).orElseThrow(() -> new RuntimeException("folder not found."));
+        folder.setSubject(subject);
+        subject.setFolder(folder);
+        subjectRepository.save(subject);
+        folderRepository.save(folder);
+
+        return new FolderResponseDTO(folder);
     }
 }

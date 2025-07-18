@@ -27,4 +27,9 @@ public class FolderController {
         return  ResponseEntity.ok(folderService.postFolder(data));
     }
 
+    @PostMapping("/{folderId}/subject/{subjectId}")
+    public ResponseEntity<FolderResponseDTO> putSubjectInFolder(@PathVariable Long folderId, @PathVariable Long subjectId) {
+        return  ResponseEntity.ok(folderService.putSubjectInFolder(folderId, subjectId));
+    }
+
 }
