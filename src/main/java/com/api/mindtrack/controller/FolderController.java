@@ -4,6 +4,7 @@ import com.api.mindtrack.domain.folder.dto.FolderRequestDTO;
 import com.api.mindtrack.domain.folder.dto.FolderResponseDTO;
 import com.api.mindtrack.domain.note.dto.NoteResponseDTO;
 import com.api.mindtrack.service.FolderService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,11 @@ public class FolderController {
         return ResponseEntity.ok(folderService.getFoldersOfUser());
     }
 
+    @GetMapping("/{folderId}")
+    public ResponseEntity<FolderResponseDTO> getFolderById(@PathVariable Long folderId) {
+        return ResponseEntity.ok(folderService.getFolderById(folderId));
+    }
+
     @PostMapping()
     public ResponseEntity<FolderResponseDTO> postFolder(@RequestBody FolderRequestDTO data) {
         return  ResponseEntity.ok(folderService.postFolder(data));
@@ -31,5 +37,7 @@ public class FolderController {
     public ResponseEntity<FolderResponseDTO> putSubjectInFolder(@PathVariable Long folderId, @PathVariable Long subjectId) {
         return  ResponseEntity.ok(folderService.putSubjectInFolder(folderId, subjectId));
     }
+
+
 
 }

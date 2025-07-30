@@ -60,4 +60,16 @@ public class FolderService {
 
         return new FolderResponseDTO(folder);
     }
+
+    public FolderResponseDTO getFolderById(Long folderId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserModel user = (UserModel) authentication.getPrincipal();
+        FolderModel folder = folderRepository.findById(folderId).orElseThrow(() -> new RuntimeException("Folder not found."));
+
+        if(!user.getId().equals(folder.getUser().getId())) {
+            throw new AccessDenied();
+        }
+
+        return new FolderResponseDTO(folder);
+    }
 }
